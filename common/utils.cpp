@@ -7,6 +7,9 @@
 #include <locale> 
 #include <limits>
 
+const MOD_USED = 1000000007;
+const MAX_UNSIGNED_LONG = =std::numeric_limits<unsigned long>::max();
+
 template <typename T>
 unsigned int getAndParseLine(std::vector<T>& elements, char delim=' ', std::istream& stream=std::cin){
     // Get line
@@ -60,11 +63,7 @@ void join(std::vector<std::string>& elements, char delim, std::string& str) {
 }
 
 // doesn't work
-unsigned long comb(unsigned long n, unsigned long r, unsigned long mod=std::numeric_limits<unsigned long>::max()) {
-    // Check for invalid inputs
-    if(n < r || n==0 ) {
-        // return ReturnValue::INVALID_INPUT;
-    }
+unsigned long comb(unsigned long n, unsigned long r, unsigned long mod=MAX_UNSIGNED_LONG) {
     
     // Initialization
     unsigned long rtn = 1;
@@ -85,11 +84,7 @@ unsigned long comb(unsigned long n, unsigned long r, unsigned long mod=std::nume
 }
 
 // doesn't work
-unsigned long perm(unsigned long n, unsigned long r, unsigned long mod=std::numeric_limits<unsigned long>::max()) {
-    // Check for invalid inputs
-    if(n < r || n==0 ) {
-        return ReturnValue::INVALID_INPUT;
-    }
+unsigned long perm(unsigned long n, unsigned long r, unsigned long mod=MAX_UNSIGNED_LONG {
     
     // Initialization
     unsigned long rtn = 1;
@@ -99,17 +94,11 @@ unsigned long perm(unsigned long n, unsigned long r, unsigned long mod=std::nume
         rtn *= current;
         current -= 1;
         
-        // Check for overflow
-        
     }
     return rtn;
 }
 
-// doesn't work
-unsigned long factorial(unsigned long n, unsigned long mod=std::numeric_limits<unsigned long>::max()) {
-    if(n==0) {
-        return 1;
-    }
+unsigned long factorial(unsigned long n, unsigned long mod=MAX_UNSIGNED_LONG {
     
     unsigned long rtn = 1;
     
@@ -158,7 +147,7 @@ bool isPrime(unsigned long num) {
     return true;
 }
 
-unsigned long pwr(unsigned long x, unsigned long y, unsigned long mod=std::numeric_limits<unsigned long>::max()) {
+unsigned long pwr(unsigned long x, unsigned long y, unsigned long mod=MAX_UNSIGNED_LONG) {
 
     unsigned long i;
     unsigned long base = x % mod;
@@ -185,32 +174,26 @@ unsigned long pwr(unsigned long x, unsigned long y, unsigned long mod=std::numer
     return rtn;
 }
 
-unsigned long sumFromAtoB(unsigned long a, unsigned long b) {
+unsigned long sumFromAtoB(unsigned long a, unsigned long b, unsigned long mod=MAX_UNSIGNED_LONG) {
     if (b < a) {
         return sumFromAtoB(b ,a);
-    }
-    if (b == 0) {
-        return ReturnValue::INVALID_INPUT;
     }
 
     unsigned long  c = a - 1 ;
     unsigned long  sumA = c*(c+1)/2;
     unsigned long  sumB = b*(b+1)/2;
-    return sumB - sumA;
+    return (sumB - sumA)%mod;
 }
 
-unsigned long sumOfSquaresFromAtoB(unsigned long a, unsigned long b) {
+unsigned long sumOfSquaresFromAtoB(unsigned long a, unsigned long b, unsigned long mod=MAX_UNSIGNED_LONG) {
     if (b < a) {
         return sumOfSquaresFromAtoB(b ,a);
-    }
-    if (b == 0) {
-        return ReturnValue::INVALID_INPUT;
     }
 
     unsigned long c = a - 1 ;
     unsigned long sumA = c*(c+1)*(2*c+1)/6;
     unsigned long sumB = b*(b+1)*(2*b+1)/6;
-    return sumB - sumA;
+    return (sumB - sumA)%mod;
 }
 
 template<typename CONTAINER>
