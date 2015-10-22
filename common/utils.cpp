@@ -29,6 +29,26 @@ unsigned int getAndParseLine(std::vector<T>& elements, char delim=' ', std::istr
     return elements.size();
 }
 
+template<typename T, typename STREAM>
+T get(STREAM& is) {
+	T t;
+	is >> t;
+	return t;
+}
+
+/**
+ * Inherit from this to enable the operator overload below.
+ * Just define a print(STREAM&) function on your type and it will be called
+ * when someone tries to print it
+ */
+struct print_printable { };
+
+template<typename T, typename STREAM>
+auto operator<<(STREAM& os, const T& t) -> decltype(static_cast<const print_printable*>(&t),os) {
+	t.print(os);
+	return os;
+}
+
 template <typename T>
 std::string numtos(T value) {
     std::ostringstream ss;
