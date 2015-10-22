@@ -225,3 +225,79 @@ template<typename CONTAINER>
 typename value_type getMin(const CONTAINER& c) {
     return *std::min_element(c.begin(), c.end());
 }
+
+/**
+ * Generalized combiner. Starts at 'first', uses 'next' to get the next value until 'last' is encountered,
+ * calling 'f' each time on the values, and combining with the previous using 'combine'. initial value
+ * (what the first call to f is combined with) is 'ir'
+ */
+template<typename INDEX, typename INITIAL_RESULT, typename FUNC, typename COMB_FUNC, typename NEXT_FUNC>
+auto combine(INDEX first, INDEX last, INITIAL_RESULT ir, FUNC f, COMB_FUNC combiner, NEXT_FUNC next) {
+	decltype(f(first)) result = ir;
+	for (auto i = first;; i = next(i)) {
+		result = combiner(result,f(i));
+		if (i == last) {
+			break;
+		}
+	}
+	return result;
+}
+
+/**
+ * Goes from 'first' to 'last', calling 'f' on the each, and keeping track of the sum.
+ * Can be used to easily implement something that you know in Big Sigma notation
+ */
+template<typename INDEX, typename FUNC>
+auto sum(INDEX first, INDEX last, FUNC f) {
+	return combine(
+		first,
+		last,
+		0,
+		f,
+		[&](auto lhs, auto rhs) {
+			return lhs + rhs;
+		},
+		[&](auto i) {
+			return i + 1;
+		}
+	);
+}
+
+/**
+ * same as sum, except goes from 'last' to 'first' if you need that for floating point math reasons.
+ */
+template<typename INDEX, typename FUNC>
+auto reverse_sum(INDEX first, INDEX last, FUNC f) {
+	return combine(
+		last,
+		first,
+		0,
+		f,
+		[&](auto lhs, auto rhs) {
+			return lhs + rhs;
+		},
+		[&](auto i) {
+			return i - 1;
+		}
+	);
+}
+
+/**
+ * Goes from 'first' to 'last', calling 'f' on the each, and keeping track of the product.
+ * Can be used to easily implement something that you know in Big Pi notation
+ */
+template<typename INDEX, typename FUNC>
+auto product(INDEX first, INDEX last, FUNC f) {
+	return combine(
+		first,
+		last,
+		1,
+		f,
+		[&](auto lhs, auto rhs) {
+			return lhs * rhs;
+		},
+		[&](auto i) {
+			return i + 1;
+		}
+	);
+}
