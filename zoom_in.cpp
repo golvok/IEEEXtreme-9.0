@@ -41,7 +41,7 @@ int main() {
 	std::unordered_map<char,std::vector<std::string>> zoomed_in_chars;
 
 	for (uint i = 0; i < num_chars; ++i) {
-		auto c = get<char>();
+		char c = std::cin.get();
 		std::vector<std::string> zoomed_in_c;
 		for (uint row = 0; row < num_rows; ++row) {
 			std::cin.get(); // consume newline
@@ -50,18 +50,28 @@ int main() {
 				zoomed_in_c.back().push_back(std::cin.get());
 			}
 		}
+        std::cout << "read " << c << '\n';
 		zoomed_in_chars.emplace(c,std::move(zoomed_in_c));
 	}
 
-	auto num_strs = get<uint>();
-
+	auto num_strs = get<char>();
+    std::cout << num_strs << " 1\n";
+    // std::cin.get();
+    std::cout << "2\n";
 	for (uint i = 0; i < num_strs; ++i) {
-
-		auto str = get<std::string>();
-
+        std::cout << "3\n";
+        std::string str;
+        while (true) {
+            std::cout << "4\n";
+            char c = std::cin.get();
+            std::cout << c;
+            if ( c == '\n') break;
+            str.push_back(c);
+        }
+        std::cout << "str=" << str << '\n';
 		for (uint row = 0; row < num_rows; ++row) {
 			for (char c : str) {
-				std::cout << zoomed_in_chars[c][row]; 
+                std::cout << zoomed_in_chars[c][row]; 
 			}
 			std::cout << '\n';
 		}
