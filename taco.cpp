@@ -32,7 +32,7 @@ using namespace std;
 int main() {
     vector<int> numTestCases;
     getAndParseLine(numTestCases);
-    int i,j;
+    int i;
     for (i=0; i<numTestCases[0]; ++i) {
         vector<unsigned long> ingredients;
         getAndParseLine(ingredients);
