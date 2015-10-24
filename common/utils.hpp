@@ -7,8 +7,8 @@
 #include <locale> 
 #include <limits>
 
-const MOD_USED = 1000000007;
-const MAX_UNSIGNED_LONG = =std::numeric_limits<unsigned long>::max();
+const unsigned long long int MOD_USED = 1000000007;
+const unsigned long long int MAX_UNSIGNED_LONG = std::numeric_limits<unsigned long>::max();
 
 template <typename T>
 unsigned int getAndParseLine(std::vector<T>& elements, char delim=' ', std::istream& stream=std::cin){
@@ -83,7 +83,7 @@ void join(std::vector<std::string>& elements, char delim, std::string& str) {
 }
 
 // doesn't work
-unsigned long comb(unsigned long n, unsigned long r, unsigned long mod=MAX_UNSIGNED_LONG) {
+unsigned long comb(unsigned long n, unsigned long r /*, unsigned long mod=MAX_UNSIGNED_LONG */) {
     
     // Initialization
     unsigned long rtn = 1;
@@ -104,7 +104,7 @@ unsigned long comb(unsigned long n, unsigned long r, unsigned long mod=MAX_UNSIG
 }
 
 // doesn't work
-unsigned long perm(unsigned long n, unsigned long r, unsigned long mod=MAX_UNSIGNED_LONG {
+unsigned long perm(unsigned long n, unsigned long r/*, unsigned long mod=MAX_UNSIGNED_LONG */) {
     
     // Initialization
     unsigned long rtn = 1;
@@ -118,7 +118,7 @@ unsigned long perm(unsigned long n, unsigned long r, unsigned long mod=MAX_UNSIG
     return rtn;
 }
 
-unsigned long factorial(unsigned long n, unsigned long mod=MAX_UNSIGNED_LONG {
+unsigned long factorial(unsigned long n, unsigned long mod=MAX_UNSIGNED_LONG) {
     
     unsigned long rtn = 1;
     
@@ -217,12 +217,12 @@ unsigned long sumOfSquaresFromAtoB(unsigned long a, unsigned long b, unsigned lo
 }
 
 template<typename CONTAINER>
-typename value_type getMax(const CONTAINER& c) {
+typename CONTAINER::value_type getMax(const CONTAINER& c) {
     return *std::max_element(c.begin(), c.end());
 }
 
 template<typename CONTAINER>
-typename value_type getMin(const CONTAINER& c) {
+typename CONTAINER::value_type getMin(const CONTAINER& c) {
     return *std::min_element(c.begin(), c.end());
 }
 
@@ -232,7 +232,7 @@ typename value_type getMin(const CONTAINER& c) {
  * (what the first call to f is combined with) is 'ir'
  */
 template<typename INDEX, typename INITIAL_RESULT, typename FUNC, typename COMB_FUNC, typename NEXT_FUNC>
-auto combine(INDEX first, INDEX last, INITIAL_RESULT ir, FUNC f, COMB_FUNC combiner, NEXT_FUNC next) {
+auto combine(INDEX first, INDEX last, INITIAL_RESULT ir, FUNC f, COMB_FUNC combiner, NEXT_FUNC next) -> decltype(f(first)) {
 	decltype(f(first)) result = ir;
 	for (auto i = first;; i = next(i)) {
 		result = combiner(result,f(i));
@@ -247,57 +247,57 @@ auto combine(INDEX first, INDEX last, INITIAL_RESULT ir, FUNC f, COMB_FUNC combi
  * Goes from 'first' to 'last', calling 'f' on the each, and keeping track of the sum.
  * Can be used to easily implement something that you know in Big Sigma notation
  */
-template<typename INDEX, typename FUNC>
-auto sum(INDEX first, INDEX last, FUNC f) {
-	return combine(
-		first,
-		last,
-		0,
-		f,
-		[&](auto lhs, auto rhs) {
-			return lhs + rhs;
-		},
-		[&](auto i) {
-			return i + 1;
-		}
-	);
-}
+// template<typename INDEX, typename FUNC>
+// auto sum(INDEX first, INDEX last, FUNC f) {
+// 	return combine(
+// 		first,
+// 		last,
+// 		0,
+// 		f,
+// 		[&](auto lhs, auto rhs) {
+// 			return lhs + rhs;
+// 		},
+// 		[&](auto i) {
+// 			return i + 1;
+// 		}
+// 	);
+// }
 
 /**
  * same as sum, except goes from 'last' to 'first' if you need that for floating point math reasons.
  */
-template<typename INDEX, typename FUNC>
-auto reverse_sum(INDEX first, INDEX last, FUNC f) {
-	return combine(
-		last,
-		first,
-		0,
-		f,
-		[&](auto lhs, auto rhs) {
-			return lhs + rhs;
-		},
-		[&](auto i) {
-			return i - 1;
-		}
-	);
-}
+// template<typename INDEX, typename FUNC>
+// auto reverse_sum(INDEX first, INDEX last, FUNC f) {
+// 	return combine(
+// 		last,
+// 		first,
+// 		0,
+// 		f,
+// 		[&](auto lhs, auto rhs) {
+// 			return lhs + rhs;
+// 		},
+// 		[&](auto i) {
+// 			return i - 1;
+// 		}
+// 	);
+// }
 
 /**
  * Goes from 'first' to 'last', calling 'f' on the each, and keeping track of the product.
  * Can be used to easily implement something that you know in Big Pi notation
  */
-template<typename INDEX, typename FUNC>
-auto product(INDEX first, INDEX last, FUNC f) {
-	return combine(
-		first,
-		last,
-		1,
-		f,
-		[&](auto lhs, auto rhs) {
-			return lhs * rhs;
-		},
-		[&](auto i) {
-			return i + 1;
-		}
-	);
-}
+// template<typename INDEX, typename FUNC>
+// auto product(INDEX first, INDEX last, FUNC f) {
+// 	return combine(
+// 		first,
+// 		last,
+// 		1,
+// 		f,
+// 		[&](auto lhs, auto rhs) {
+// 			return lhs * rhs;
+// 		},
+// 		[&](auto i) {
+// 			return i + 1;
+// 		}
+// 	);
+// }
