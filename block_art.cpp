@@ -50,7 +50,7 @@ std::pair<Rectange,bool> intersection(const Rectange& r1, const Rectange& r2) {
 	result.top = std::min(r1.top,r2.top);
 	result.bottom = std::max(r1.bottom,r2.bottom);
 
-	return { result, result.left < result.right && result.bottom < result.top };
+	return { result, result.left <= result.right && result.bottom <= result.top };
 }
 
 int main() {
