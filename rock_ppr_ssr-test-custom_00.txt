@@ -1,0 +1,26 @@
+25
+R R 100
+R P 100
+R S 100
+R L 100
+R Spock 100
+P R 100
+P P 100
+P S 100
+P L 100
+P Spock 100
+S R 100
+S P 100
+S S 100
+S L 100
+S Spock 100
+L R 100
+L P 100
+L S 100
+L L 100
+L Spock 100
+Spock R 100
+Spock P 100
+Spock S 100
+Spock L 100
+Spock Spock 100
