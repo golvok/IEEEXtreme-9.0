@@ -11,11 +11,12 @@ def catalan(n):
 
 
 for line in sys.stdin:
-	# print(catalan(550)); # 329 digits
+	getcontext().prec=350
+	# print(catalan(549)); # 329 digits
 	target_num = Decimal(line);
-	binary_searching = False
+	binary_searching = True;
 	min_num = 0;
-	max_num = 1;
+	max_num = 550;
 	while 1:
 		if (binary_searching):
 			num = int((max_num - min_num)/2 + min_num)
@@ -23,7 +24,7 @@ for line in sys.stdin:
 			max_num = max_num*2;
 			num = max_num;
 		cat = catalan(num);
-		# print(num);
+		print(num);
 		# print(cat);
 		# print();
 		if (cat == target_num):
