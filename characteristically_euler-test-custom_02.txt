@@ -1,0 +1,27 @@
+3
+6
+7
+OOOOOOO
+OOOOOXO
+OOOXOXO
+OXOXXOO
+OQXXOOO
+OOOOOOO
+4
+4
+XXXX
+XXXX
+XXXX
+XXXX
+4
+4
+XXXX
+X00X
+X00X
+XXXX
+
+# this file has some of the most edge casey things I could think of
+# answers should be
+# 1
+# 1
+# 1
