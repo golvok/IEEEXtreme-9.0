@@ -12,6 +12,8 @@
 #include <unordered_map>
 #include <unordered_set>
 
+const unsigned long mod = 1000000007;
+
 template<typename T, typename STREAM>
 T get(STREAM& is) {
 	T t;
@@ -57,7 +59,8 @@ public:
 };
 
 int main() {
-	auto road_length = get<xtype>(std::cin);
+
+	auto road_length = get<ytype>(std::cin);
 	auto num_cows = get<uint>(std::cin);
 
 	CowLocations cows;
@@ -69,4 +72,26 @@ int main() {
 
 	// usage:
 	// cows.hasCowAt(x,y);
+
+	std::vector<unsigned long> prev = {0, 1, 0, 0, 0, 0};
+	std::vector<unsigned long> cur = {0, 0, 0, 0, 0, 0};
+
+	unsigned long long i, j;
+	for (i=2; i<road_length+1; ++i) {
+		for (j=1; j<5; ++j) {
+			if (cows.hasCowAt(j,i)) {
+				cur[j] = 0;
+			} else {
+				cur[j] = ((prev[j-1] + prev[j])%mod + prev[j+1])%mod;
+			}
+		}
+        if (cur[1] ==0 && cur[2]==0 && cur[3]==0 && cur[4]==0){
+	       std::cout << 0 << std::endl;
+            return 0;
+        }
+		prev = cur;
+	}
+	std::cout << cur[1] << std::endl;
+
+    return 0;
 }
