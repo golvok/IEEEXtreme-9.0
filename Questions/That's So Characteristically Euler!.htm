@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!-- First they ignore you, then they laugh at you, then they fight you, then you win. - Mohandas Karamchand Gandhi -->
+<html class=" mod_js mod_flexbox mod_flexboxlegacy mod_canvas mod_canvastext mod_webgl mod_no-touch mod_geolocation mod_history mod_draganddrop mod_rgba mod_hsla mod_multiplebgs mod_backgroundsize mod_borderimage mod_borderradius mod_boxshadow mod_textshadow mod_opacity mod_cssanimations mod_csscolumns mod_cssgradients mod_no-cssreflections mod_csstransforms mod_csstransforms3d mod_csstransitions mod_fontface mod_generatedcontent mod_video mod_audio mod_applicationcache mod_svg mod_inlinesvg mod_smil mod_svgclippaths mod_csscalc mod_fullscreen mod_cssresize mod_no-ie8compat" lang="en"><head>
+        <div class="span-md-11 hr_tour-problem-statement problem-statement">
+            
+            
+            
+            <div class="content-text challenge-text mlB">
+                <div class="msB"><p><strong>Problem Statement</strong></p></div><div class="msB"><p><em>This challenge is sponsored by the IEEE Computer Society.</em></p>
+
+<p>Topology is a branch of mathematics that examines the shapes and structures of objects.  The <em>Euler characteristic</em>
+ is a topological label that we can determine for an item or collection 
+of items.  For a group of two dimensional objects, one way to define the
+ Euler characteristic is the number of connected objects minus the 
+number of holes in the objects.</p>
+
+<p>The Euler characteristic has useful applications in 2D image 
+recognition and classification.  Consider the following black and white 
+representations of three digits and a letter and their corresponding 
+Euler characteristics.</p>
+
+<p><img src="assets/1427640561-1a811d93ed-image1.png" title="image1.png"></p>
+
+<p>As you can see, the Euler characteristic can give a lot of 
+information about what a given image might or might not represent. Note 
+that, in this problem, we consider filled-in regions that touch 
+diagonally to be part of the same connected region; however, holes that 
+only touch diagonally are considered to be separate.  Your task is to 
+compute the Euler characteristic (connected regions minus holes) for a 
+black and white image similar to those above.</p></div><div class="msB"><p><strong>Input Format</strong></p></div><div class="msB"><p>Each input contains multiple test cases.  The first line of input contains an integer <em>t</em>, 1 &lt;= <em>t</em> &lt;= 10.</p>
+
+<p>Following this line are <em>t</em> test cases, each with the following format:</p>
+
+<ul>
+<li><p>The first line of the test case contains an integer <em>n</em>, giving the height of the image.  </p></li>
+<li><p>The second line of the test case contains an integer <em>m</em>, giving the width of the image.  </p></li>
+<li><p>The rest of the test case contains <em>n</em> lines of text.  These <em>n</em> lines of text contain <em>m</em>
+ characters, each of which is either the letter 'X' or the letter 'O'.  
+An 'X' represents a black pixel, and an 'O' represents a white pixel.  </p></li>
+<li><p>The possible ranges for <em>n</em> and <em>m</em> are 1 &lt;= <em>n</em> &lt;= 1,000 and 1 &lt;= <em>m</em> &lt;= 1,000.  The input will always be correctly formatted.</p></li>
+</ul></div><div class="msB"><p><strong>Output Format</strong></p></div><div class="msB"><p>The
+ correct output for each input is a single integer per test case (each 
+integer on its own line) which gives the Euler characteristic for each 
+input image.</p></div><div class="msB"><p><strong>Sample Input</strong></p></div><div class="msB"><p></p><pre>1
+4
+4
+OOOO
+OXXO
+OXXO
+OOOO
+</pre><p></p></div><div class="msB"><p><strong>Sample Output</strong></p></div><div class="msB"><p></p><pre>1
+</pre><p></p></div><div class="msB"><p><strong>Explanation</strong></p></div><div class="msB"><p>The sample input contains a single image.  The image contains a single connected square region surrounded by empty space.  </p>
+
+<p>Thus, 1 region - 0 holes = 1.</p></div>
+            </div>
+            
+        </div>
+</html>

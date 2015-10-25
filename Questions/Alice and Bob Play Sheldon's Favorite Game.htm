@@ -1,0 +1,124 @@
+<html>
+        <div class="span-md-11 hr_tour-problem-statement problem-statement">
+            
+            
+            
+            <div class="content-text challenge-text mlB">
+                <div class="msB"><p><strong>Problem Statement</strong></p></div><div class="msB"><p>Rock,
+ Paper, Scissors, Lizard, Spock is a game, invented by Sam Kass and 
+Karen Bryla, that extends the Rock, Paper, Scissors game.  It is a 
+favorite of the character Sheldon from the TV Show, <em>The Big Bang Theory</em>.</p>
+
+<p>The rules of the game are as follows.  Each player chooses a shape from the set {<em>Rock</em>, <em>Paper</em>, <em>Scissors</em>, <em>Lizard</em>, <em>Spock</em>}.
+  If the two players choose the same shape, they tie.  Otherwise, the 
+winner is the one with the shape listed first in the following set of 
+rules:</p>
+
+<pre><code>Scissors cuts Paper
+Paper covers Rock
+Rock crushes Lizard
+Lizard poisons Spock
+Spock smashes Scissors
+Scissors decapitates Lizard
+Lizard eats Paper
+Paper disproves Spock
+Spock vaporizes Rock
+(and as it always has) Rock crushes scissors
+</code></pre>
+
+<p>Below is a graphical representation from <em>The Big Bang Theory's</em> wiki:</p>
+
+<p><img src="assets/1437993569-969099fbc7-RPSLS.png" title="RPSLS.png"></p>
+
+<p>Alice and Bob also enjoy this game, and they have decided to play a 
+series of them.  Each has a very specific strategy that they follow.</p>
+
+<p>Alice's strategy is as follows:</p>
+
+<p>1)  If she wins a game, she keeps the same shape.</p>
+
+<p>2)  If she ties, she chooses a shape from one of the two that would 
+beat her current shape.  Of these two, she chooses the one that beats 
+the other.  For example, if she has tied when choosing <em>Rock</em>, her options are <em>Paper</em> and <em>Spock</em>.  Since <em>Paper</em> beats <em>Spock</em>, she chooses <em>Paper</em>.</p>
+
+<p>3)  If she loses, she chooses a shape from one of the two that would 
+beat her opponent's current shape.  Of these two, she chooses the one 
+that beats the other.  For example, let's say she has lost by choosing <em>Rock</em>, when her opponent chose <em>Paper</em>.  She will then choose from <em>Scissors</em> or <em>Lizard</em>.  Since <em>Scissors</em> beats <em>Lizard</em>, she chooses <em>Scissors</em>.</p>
+
+<p>Bob's strategy is as follows:</p>
+
+<p>1) Every other turn, he chooses <em>Spock</em>.</p>
+
+<p>2) If he won the previous turn when playing <em>Spock</em>, he chooses <em>Rock</em>.</p>
+
+<p>3) If he tied the previous turn when playing <em>Spock</em>, he chooses <em>Lizard</em>.</p>
+
+<p>4) If he lost the previous turn when playing <em>Spock</em>, he chooses <em>Paper</em>.</p>
+
+<p>Your task is to write a program that evaluates a series of games between Alice and Bob.</p></div><div class="msB"><p><strong>Input Format</strong></p></div><div class="msB"><p>The first line of input contains a single integer <em>t</em>, 1 &lt;= <em>t</em> &lt;= 50, containing the number of test cases in the input.</p>
+
+<p>Then come <em>t</em> lines each describing a test case, made up of a series of games for you to evaluate.  These lines have the following format:</p>
+
+<pre><code>[AliceShape] [BobShape] [n]
+</code></pre>
+
+<p>Where</p>
+
+<ul>
+<li><p>[AliceShape] is the shape that Alice will choose in the first game of the series.</p></li>
+<li><p>[BobShape] is the shape that Bob will choose in the first game of the series.</p></li>
+<li><p>[n] is an integer, 1 &lt;= n &lt;= 10<sup>18</sup>, indicating how many games Alice and Bob will play in the series.</p></li>
+</ul></div><div class="msB"><p><strong>Output Format</strong></p></div><div class="msB"><p>Output will consist of a single line in the appropriate one of the following forms:</p>
+
+<pre><code>[Player] wins, by winning [WinGames] game(s) and tying [TieGames] game(s)
+
+Alice and Bob tie, each winning [WinGames] game(s) and tying [TieGames] game(s)
+</code></pre>
+
+<p>where </p>
+
+<ul>
+<li><p>[Player] is the name of the player with more wins (either "Alice" or "Bob")</p></li>
+<li><p>[WinGames] is the number of games won either by the winner or, in the case of a tie, by each player</p></li>
+<li><p>[TieGames] is the number of games in which the players tied</p></li>
+</ul>
+
+<p>Notes:</p>
+
+<ul>
+<li><p>The output is case sensitive.  The player names, for example, 
+must be either "Alice" or "Bob".  Neither "alice" nor "BOB" will be 
+acceptable.</p></li>
+<li><p>The words are separated by a single space, and there are no 
+spaces before the first word in the line, nor after the last word in the
+ line.</p></li>
+</ul></div><div class="msB"><p><strong>Sample Input</strong></p></div><div class="msB"><pre><code>2
+Rock Spock 4
+Paper Paper 1
+</code></pre></div><div class="msB"><p><strong>Sample Output</strong></p></div><div class="msB"><pre><code>Bob wins, by winning 2 game(s) and tying 1 game(s)
+Alice and Bob tie, each winning 0 game(s) and tying 1 game(s)
+</code></pre></div><div class="msB"><p><strong>Explanation</strong></p></div><div class="msB"><p>There are two test cases in this input:</p>
+
+<p><em>Test Case 1</em></p>
+
+<p>In the first game, Bob wins, since <em>Spock</em> vaporizes <em>Rock</em>.</p>
+
+<p><em>Bob</em> won when choosing <em>Spock</em> so he chooses <em>Rock</em>.  Alice lost, so she chooses from <em>Paper</em> and <em>Lizard</em>, both of which beat Bob's last choice of <em>Spock</em>.  Since <em>Lizard</em> beats <em>Paper</em>, she chooses <em>Lizard</em>.</p>
+
+<p>In the second game, then, Bob wins again, because <em>Rock</em> crushes <em>Lizard</em>.</p>
+
+<p>Bob did not play <em>Spock</em> last turn, so he chooses <em>Spock</em> next.  Alice lost, so she chooses from <em>Paper</em> and <em>Spock</em>, both of which beat Bob's last choice of <em>Rock</em>.  Since <em>Paper</em> beats <em>Spock</em>, she chooses <em>Paper</em>.</p>
+
+<p>In the third game, Alice wins, since <em>Paper</em> disproves <em>Spock</em>.</p>
+
+<p>Bob lost when choosing <em>Spock</em> so he chooses <em>Paper</em>.  Alice won, so she continues playing <em>Paper</em>.</p>
+
+<p>In the fourth game, they tie by both choosing <em>Paper</em>.</p>
+
+<p><em>Test Case 2</em></p>
+
+<p>This test case consists of a single game in which both players play <em>Paper</em>.</p></div>
+            </div>
+            
+        </div>
+</html>

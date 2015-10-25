@@ -1,0 +1,86 @@
+<html>
+        <div class="span-md-11 hr_tour-problem-statement problem-statement">
+            
+            
+            
+            <div class="content-text challenge-text mlB">
+                <div class="msB"><p><strong>Problem Statement</strong></p></div><div class="msB"><p>The
+ NeoCubist artistic movement has a very distinctive approach to art.  It
+ starts with a rectangle which is divided into a number of squares.  
+Then multiple rounds of layering and scraping occur.  In a layering 
+round, a rectangular region of this canvas is selected and a layer of 
+cubes, 1 cube deep, is added to the region.  In a scraping round, a 
+rectangular region of the canvas is selected, and a layer of cubes, 
+again 1 cube deep, is removed.</p>
+
+<p>The famous artist I.M. Blockhead seeks your help during the creation 
+of this artwork.  As he is creating his art, he is curious to know how 
+many blocks are in different regions of the canvas.</p>
+
+<p>Your task is to write a program that tracks the creation of a work of
+ Pseudo-Cubist art, and answers I.M.’s periodic queries about the number
+ of blocks that are on the canvas.  Consider, for example, the following
+ artwork created on a canvas with 5 rows and 15 columns or squares.  The
+ canvas starts without any blocks, like in the figure below.  We label 
+cells in the canvas based on the tuple (row,column), with the upper left
+ corner being designated (1,1).  The numbers in each cell represent the 
+height of the blocks in that cell.</p>
+
+<p><img src="assets/1431724548-95dd5c1d5c-fig1.jpg" title="fig1.jpg"></p>
+
+<p>After adding a layer in blocks to the rectangle with upper left 
+corner at (2,3) and a lower right corner of (4, 10), the canvas now 
+looks like the following:</p>
+
+<p><img src="assets/1431724554-af999fd257-fig2.jpg" title="fig2.jpg"></p>
+
+<p>After adding a layer of blocks in the rectangle with upper left 
+corner at (3,8) and a lower right corner of (5, 15), the canvas now 
+looks like the following:</p>
+
+<p><img src="assets/1431724575-5052559904-fig3.jpg" title="fig3.jpg"></p>
+
+<p>If Blockhead were to ask how many blocks are currently in the artwork
+ in the rectangle with upper left corner (1,1) and lower right corner 
+(5,15), you would tell him 48.</p>
+
+<p>Now, if we remove a layer of blocks from the rectangle with upper 
+left corner at (3,6) and a lower right corner of (4, 12), the canvas now
+ looks like the following:</p>
+
+<p><img src="assets/1431724605-35e7920e09-fig4.jpg" title="fig4.jpg"></p>
+
+<p>If Blockhead were to ask how many blocks are now in the artwork in 
+the rectangle with upper left corner (3,5) and lower right corner 
+(4,13), you would tell him 10.</p>
+
+<p>“Beautiful!” exclaims Blockhead.  </p></div><div class="msB"><p><strong>Input Format</strong></p></div><div class="msB"><p>The first line in each test case are two integers <em>r</em> and <em>c</em>, 1 &lt;= <em>r</em> &lt;= 12, 1 &lt;= <em>c</em> &lt;= 10<sup>6</sup>, where <em>r</em> is the number of rows and <em>c</em> is the number of columns in the canvas.</p>
+
+<p>The next line of input contains an integer <em>n</em>, 1 &lt;= <em>n</em> &lt;= 10<sup>4</sup>.  </p>
+
+<p>The following <em>n</em> lines of input contain operations and 
+queries done on the initially empty canvas.  The operations will be in 
+the following format:</p>
+
+<p>[operation] [top left row] [top left column] [bottom right row] [bottom right column]</p>
+
+<p>[operation] is a character, either “a” when a layer of blocks is 
+being added, “r” when a layer of blocks is being removed, and “q” when 
+Blockhead is asking you for the number of blocks in a region.  </p>
+
+<p>The remaining values on the line correspond to the top left and bottom right corners of the rectangle.</p>
+
+<p>Note:  You will never be asked to remove a block from a cell that has no blocks in it.  </p></div><div class="msB"><p><strong>Output Format</strong></p></div><div class="msB"><p>For each “q” operation in the input, you should output, on a line by itself, the number of blocks in the region of interest.</p></div><div class="msB"><p><strong>Sample Input</strong></p></div><div class="msB"><p></p><pre>5 15
+5
+a 2 3 4 10
+a 3 8 5 15
+q 1 1 5 15
+r 3 6 4 12
+q 3 5 4 13
+</pre><p></p></div><div class="msB"><p><strong>Sample Output</strong></p></div><div class="msB"><p></p><pre>48
+10
+</pre><p></p></div><div class="msB"><p><strong>Explanation</strong></p></div><div class="msB"><p>This test case corresponds to the description given above.</p></div>
+            </div>
+            
+        </div>
+</html>

@@ -1,0 +1,97 @@
+<html>
+        <div class="span-md-11 hr_tour-problem-statement problem-statement">
+            
+            
+            
+            <div class="content-text challenge-text mlB">
+                <div class="msB"><p><strong>Problem Statement</strong></p></div><div class="msB"><p>The
+ TransContinental Ocean-liner Company is celebrating their centennial 
+anniversary. As a part of the celebrations, they launched an exciting 
+contest for a free, around-the-world cruise on one of their ships.  As 
+part of the contest entry, passengers select two cabins in which they 
+would like to stay.  If they are a winner, they will be given one of the
+ two cabins.</p>
+
+<p>Interest was enormous, and great many people applied to be a part of 
+the voyage. Winners will be decided on a lottery. The company does not 
+have any control over whom all will win the final lottery or obtain the 
+tickets, but only on how many tickets will be distributed.</p>
+
+<p>Jerry, the tour manager, is finding it difficult to find the maximum 
+number of prizes that can be awarded. He must make sure that each 
+potential winner can be accommodated in one of the cabins that they 
+specified when they entered the contest.  </p>
+
+<p>Your job is to find the maximum number of prizes that can be awarded 
+subject to this constraint. Help Jerry to find a solution for his 
+problem and earn some real good points for yourselves!</p></div><div class="msB"><p><strong>Input Format</strong></p></div><div class="msB"><p>The input begins with an integer <em>T</em>, 1 &lt;= <em>T</em> &lt;= 15, indicated the number of test cases.</p>
+
+<p>Each test case consists of the following:</p>
+
+<ul>
+<li><p>A line containing an integer <em>N</em>, 2 &lt;= <em>N</em> &lt;= 200, where <em>N</em> is the total number of rooms on the ship.</p></li>
+<li><p>A line containing an integer <em>M</em>, 0 &lt;= <em>M</em> &lt;= 500, where <em>M</em> are the number of people who signed up.</p></li>
+<li><p>Next come <em>M</em> lines, the <em>i</em><sup>th</sup> line containing the pair of cabins selected by the <em>i</em><sup>th</sup> entrant in the contest.  The cabin choices will be two space-separated integers, each falling between 1 and <em>N</em> (inclusive).</p></li>
+</ul></div><div class="msB"><p><strong>Output Format</strong></p></div><div class="msB"><p>For
+ each test case, you should output, on a line by itself, the maximum 
+number of tickets that can be awarded such that every winner can be 
+housed in one of the two cabins that they have selected.</p></div><div class="msB"><p><strong>Sample Input</strong></p></div><div class="msB"><p></p><pre>5
+6
+4
+1 2
+1 2
+3 4
+5 6
+6
+5
+1 2
+1 2
+1 2
+3 4
+5 6
+4
+5
+1 2
+1 3
+1 2
+2 3
+3 4
+5
+11
+1 2
+2 3
+3 4
+4 5
+1 5
+2 4
+3 4
+3 5
+2 5
+1 2
+3 5
+3
+6
+1 2
+1 2
+1 3
+2 3
+1 2
+1 3
+</pre><p></p></div><div class="msB"><p><strong>Sample Output</strong></p></div><div class="msB"><p></p><pre>4
+2
+3
+3
+2
+</pre><p></p></div><div class="msB"><p><strong>Explanation</strong></p></div><div class="msB"><p>The sample input consists of 5 test cases. </p>
+
+<p>In the 2nd test case, 3 people opted for the same 1 or 2 cabins, and 
+in order to prevent the worst case of all the 3 of them getting the 
+ticket, we can give out at most 2 tickets.</p>
+
+<p>In the 3th test case, we can give out 3 tickets and still make sure 
+that regardless of who gets a ticket, any winner can be housed in a 
+cabin of their choice.</p></div>
+            </div>
+            
+        </div>
+</html>

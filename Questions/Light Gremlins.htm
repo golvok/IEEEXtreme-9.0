@@ -1,0 +1,91 @@
+<html>
+        <div class="span-md-11 hr_tour-problem-statement problem-statement">
+            
+            
+            
+            <div class="content-text challenge-text mlB">
+                <div class="msB"><p><strong>Problem Statement</strong></p></div><div class="msB"><p><em>This challenge is sponsored by Eta Kappa Nu.</em></p>
+
+<p>There are a group of gremlins that live in a long hallway in which 
+there are a series of light switches.  At the beginning of each night, 
+all of the light switches are off.  Then, one at a time, each gremlin 
+does the following:</p>
+
+<ul>
+<li><p>The gremlin chooses a prime number <em>p</em>, that has not been chosen by any previous gremlin that night.  </p></li>
+<li><p>The gremlin runs down the hallway flipping every <em>p</em><sup>th</sup> switch.</p></li>
+</ul>
+
+<p>The owner of the hallway, who is very concerned about his electricity
+ bill, has asked you to determine how many switches are on at the end of
+ the night.</p>
+
+<p>Note:  no two gremlins will choose the same prime number.</p>
+
+<p>Consider the following example where the hallway has 21 switches and 
+there are three gremlins.  At the beginning of the night, all switches 
+are off, as shown in the figure below.</p>
+
+<p><img src="assets/1438320050-84169391e3-state1.png" title="state1.png"></p>
+
+<p>The first gremlin chooses the prime number 7, and flips the 7<sup>th</sup>, 14<sup>th</sup>, and 21<sup>st</sup> switch.  Now the configuration is:</p>
+
+<p><img src="assets/1438320151-fdbf87d684-state2.png" title="state2.png"></p>
+
+<p>The second gremlin chooses the prime number 13, and flips just the 13<sup>th</sup> switch, because there is no 26<sup>th</sup> switch.  Now the configuration is:</p>
+
+<p><img src="assets/1438320207-329f0f1d8a-state3.png" title="state3.png"></p>
+
+<p>The last gremlin chooses the prime number 3.  It flips the 3<sup>rd</sup>, 6<sup>th</sup>, 9<sup>th</sup>, 12<sup>th</sup>, 15<sup>th</sup>, 18<sup>th</sup>, and 21<sup>st</sup> switch.  Note that when he flips the 21<sup>st</sup> switch, it is turned back off.  The final configuration is:</p>
+
+<p><img src="assets/1438320298-48e39886ed-state4.png" title="state4.png"></p>
+
+<p>For this example, you would report that there are 9 lights on at the end of the night.</p></div><div class="msB"><p><strong>Input Format</strong></p></div><div class="msB"><p>The input begins with an integer <em>t</em>, 1 &lt;= <em>t</em> &lt;= 20, on a line by itself.  </p>
+
+<p>Then follow <em>t</em> lines, each describing a test case that you must evaluate.  The test cases have the following format:</p>
+
+<pre><code>[switch] [n] [prime_1] [prime_2] ... [prime_n]
+</code></pre>
+
+<p>Where</p>
+
+<ul>
+<li><p>[switch] is the number of switches in the hallway, 1 &lt;= [switch] &lt;= 10<sup>18</sup></p></li>
+<li><p>[n] is the number of gremlins who live in the hallway, 1 &lt;= [n] &lt;= 24</p></li>
+<li><p>The prime number chosen by the <em>i</em><sup>th</sup> gremlin is given by [prime_i].  All primes are greater than or equal to 2 and less than 10<sup>4</sup>. </p></li>
+</ul></div><div class="msB"><p><strong>Output Format</strong></p></div><div class="msB"><p>For each test case, you should output a single integer that indicates how many switches are on at the end of the night. </p></div><div class="msB"><p><strong>Sample Input</strong></p></div><div class="msB"><pre><code>3
+21 3 7 13 3
+20 1 31
+30 3 2 3 5
+</code></pre></div><div class="msB"><p><strong>Sample Output</strong></p></div><div class="msB"><pre><code>9
+0
+15
+</code></pre></div><div class="msB"><p><strong>Explanation</strong></p></div><div class="msB"><p>The
+ first test case corresponds to the example given in the Problem 
+Definition, which as described above results in 9 "on" switches at the 
+end of the night.</p>
+
+<p>In the second test case, there is a single gremlin, who chooses the 
+prime 31.  The hallway consists of only 20 switches, so there is no 31<sup>st</sup> switch.  Thus, no switches are turned on.</p>
+
+<p>The last test case consists of a hallway of length 30, and three gremlins.  The action of the gremlins is as follows:</p>
+
+<ul>
+<li><p>The first gremlin flips switches {2, 4, 6, 8, 10, 12, 14, 16, 18,
+ 20, 22, 24, 26, 28, 30}.  All of these switches were previously off, so
+ they are now on.</p></li>
+<li><p>The second gremlin flips switches {3, 6, 9, 12, 15, 18, 21, 24, 
+27, 30}.  Of these, {6, 12, 18, 24, 30} were previously on, so they are 
+now off.  This results in the following switches being on:  {2, 3, 4, 8,
+ 9, 10, 14, 15, 16, 20, 21, 22, 26, 27, 28}.</p></li>
+<li><p>The third gremlin flips switches {5, 10, 15, 20, 25, 30}.  Of 
+these, {10, 15, 20} were previously on, so they are now off.  This 
+results in the following switches being on: {2, 3, 4, 5, 8, 9, 14, 16, 
+21, 22, 25, 26, 27, 28, 30}.</p></li>
+</ul>
+
+<p>Thus, there are 15 switches on at the end of the night.</p></div>
+            </div>
+            
+        </div>
+</html>

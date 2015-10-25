@@ -1,0 +1,147 @@
+<html>
+        <div class="span-md-11 hr_tour-problem-statement problem-statement">
+            
+            
+            
+            <div class="content-text challenge-text mlB">
+                <div class="msB"><p><strong>Problem Statement</strong></p></div><div class="msB"><p><em>This challenge is sponsored by Morgan Claypool Publishers.</em></p>
+
+<p>Bob, Hannah, and Otto like to celebrate palindromic dates.  A 
+palindromic date is one in which the numbers in the date read the same 
+forwards and backwards.  They were very happy with 2015, which has 15 
+palindromic dates:</p>
+
+<ul>
+<li><p>5th of January, October, November and December in <code>day/month/year</code> format: 5/1/15, 5/10/15, 5/11/15, 5/12/15</p></li>
+<li><p>Eleven days in May listed in <code>month/day/year</code> format:  5/1/15 and 5/10/15 through 5/19/15</p></li>
+</ul>
+
+<p>Note: These dates are palindromic in the sense that, if the forward 
+slash delimiter (/) is disregarded, the numbers in the date read the 
+same forwards and backwards.</p>
+
+<p>While they wait to celebrate the next palindromic date on November 
+5th, they have decided to they would like to start celebrating 
+palindromic moments.  They define a palindromic moment as a palindromic 
+string obtained by formatting a date-time combination using one of the 
+following date prefixes and one of the following time suffixes:</p>
+
+<ul>
+<li><p>Date prefix:  </p>
+
+<p>Combinations of month, day, year:  <code>Mdyy</code>, <code>MMdyy</code>, <code>Mddyy</code>, <code>MMddyy</code>, <code>Mdyyyy</code>, <code>MMdyyyy</code>, <code>Mddyyyy</code>, <code>MMddyyyy</code></p>
+
+<p>Combinations of day, month, year:  <code>dMyy</code>, <code>dMMyy</code>, <code>ddMyy</code>, <code>ddMMyy</code>, <code>dMyyyy</code>, <code>dMMyyyy</code>, <code>ddMyyyy</code>, <code>ddMMyyyy</code></p></li>
+<li><p>Time suffix:</p>
+
+<p>Combinations of hour, minutes, seconds: <code>hmmss</code>, <code>hhmmss</code>, <code>Hmmss</code>, <code>HHmmss</code></p></li>
+</ul>
+
+<p>Where </p>
+
+<ul>
+<li><p><code>M</code> is the month of the year as a number, e.g. January = “1” and October = “10”</p></li>
+<li><p><code>MM</code> is the month of the year as a number with a 
+leading zero if the month of the year is one digit long, e.g. January = 
+“01” and October = “10”</p></li>
+<li><p><code>d</code> is the day of the month as a number, e.g. first = “1” and fifteenth = “15”</p></li>
+<li><p><code>dd</code> is the day of the month as a number with a 
+leading zero if the day of the month is one digit long, e.g. first = 
+“01” and fifteenth = “15”</p></li>
+<li><p><code>yy</code> is the last two digits of the year, e.g. 2000 = “00”, 12015 = “15”</p></li>
+<li><p><code>yyyy</code> is the complete year as a number, e.g. 512 = “512”, 2000 = “2000”, 12015 = “12015”</p></li>
+<li><p><code>h</code> is the hour in (AM/PM), e.g. 1 pm = “1”, 12 am = “12”</p></li>
+<li><p><code>hh</code> is the hour in (AM/PM) with a leading zero if the hour is one digit long, e.g. 1 pm = “01”, 12 am = “12”</p></li>
+<li><p><code>H</code> is the hour in the day, i.e. 0 &lt;= H &lt;= 23, e.g. 1 pm = “13”, 12 am = “0”</p></li>
+<li><p><code>HH</code> is the hour in the day with a leading zero if the hour is one digit long, e.g. 1 pm = “13”, 12 am = “00”</p></li>
+<li><p><code>mm</code> is the minute in the hour, 5 past the hour = “05”, 30 past the hour = “30”</p></li>
+<li><p><code>ss</code> is the second in the minute, 5 past the minute = “05”, 30 past the minute = “30”</p></li>
+</ul>
+
+<p>For example, during this competition on October 24, 2015, there are four palindromic moments:</p>
+
+<ul>
+<li><p>1:01:42 AM (using the <code>dMyy</code> prefix and the <code>hmmss</code> suffix): <code>24101510142</code></p></li>
+<li><p>1:42:01 AM (using the <code>Mdyy</code> prefix and the <code>hmmss</code> suffix): <code>10241514201</code></p></li>
+<li><p>1:01:42 PM (using the <code>dMyy</code> prefix and the <code>hmmss</code> suffix): <code>24101510142</code></p></li>
+<li><p>1:42:01 PM (using the <code>Mdyy</code> prefix and the <code>hmmss</code> suffix): <code>10241514201</code></p></li>
+</ul>
+
+<p>Note that for October 24, the <code>MMddyy</code>, <code>Mddyy</code>, and <code>MMdyy</code> prefixes are equivalent to the <code>Mdyy</code> prefix.  Similarly for this date, the <code>ddMMyy</code>, <code>ddMyy</code>, and <code>dMMyy</code> prefixes are equivalent to the <code>dMyy</code> prefix.</p></div><div class="msB"><p><strong>Input Format</strong></p></div><div class="msB"><p>The input begins with an integer <em>t</em>, 1 &lt;= <em>t</em> &lt;= 20, on the first line, which indicates the number of test cases.</p>
+
+<p>Following this, there are <em>t</em> test cases on separate lines, each containing a single integer <em>Year</em>, 10 &lt;= <em>Year</em> &lt;= 10<sup>6</sup>.</p></div><div class="msB"><p><strong>Output Format</strong></p></div><div class="msB"><p>For
+ each test case, you should output, on a line by itself, the number of 
+palindromic moments that occur during the year given in the test case.</p>
+
+<p>Notes:  </p>
+
+<ul>
+<li><p>We are interested in the total number of unique palindromic 
+moments in a given year. If a moment is palindromic when using two or 
+more different suffix/prefix combinations, this instance counts as a 
+single palindromic moment.  It should not be double counted.</p>
+
+<p>For example, <code>November 11, 2010 1:11:11 am</code> is palindromic when combining the <code>MMddyy</code> prefix and <code>Hmmss</code> suffix or the <code>MMddyy</code> prefix with the <code>HHmmss</code> suffix.  Even though these combinations form two different palindromes, <code>11111011111</code> and <code>111110011111</code>, this should count as a single palindromic moment.</p></li>
+<li><p>You must account for the different number of days in each month and for  <a href="https://en.wikipedia.org/wiki/Leap_year">leap years</a>.  However, you should ignore <a href="https://en.wikipedia.org/wiki/Leap_second">leap seconds</a>.  <em>Note:
+ this problem assumes that year 12 was the first leap year, and that we 
+have been having leap years regularly since this time.</em></p></li>
+</ul></div><div class="msB"><p><strong>Sample Input</strong></p></div><div class="msB"><pre><code>2
+2015
+2016
+</code></pre></div><div class="msB"><p><strong>Sample Output</strong></p></div><div class="msB"><pre><code>5626
+3761
+</code></pre></div><div class="msB"><p><strong>Explanation</strong></p></div><div class="msB"><p><em>Test Case 1</em></p>
+
+<p>There are 5626 palindromic moments during 2015.  For example, the 
+following list shows the 36 palindromic moments on January 1, 2015:</p>
+
+<ul>
+<li><p>12:51:11 AM (using the <code>Mdyy</code> prefix and the <code>Hmmss</code> suffix): <code>111505111</code></p></li>
+<li><p>1:02:11 AM (using the <code>Mdyyyy</code> prefix and the <code>hmmss</code> suffix): <code>11201510211</code></p></li>
+<li><p>1:10:10 AM (using the <code>MMddyy</code> prefix and the <code>hmmss</code> suffix): <code>01011511010</code></p></li>
+<li><p>1:51:11 AM (using the <code>Mdyy</code> prefix and the <code>hmmss</code> suffix): <code>111515111</code></p></li>
+<li><p>2:51:11 AM (using the <code>Mdyy</code> prefix and the <code>hmmss</code> suffix): <code>111525111</code></p></li>
+<li><p>3:51:11 AM (using the <code>Mdyy</code> prefix and the <code>hmmss</code> suffix): <code>111535111</code></p></li>
+<li><p>4:51:11 AM (using the <code>Mdyy</code> prefix and the <code>hmmss</code> suffix): <code>111545111</code></p></li>
+<li><p>5:11:01 AM (using the <code>Mddyy</code> prefix and the <code>hmmss</code> suffix): <code>1011551101</code></p></li>
+<li><p>5:11:10 AM (using the <code>MMdyy</code> prefix and the <code>hmmss</code> suffix): <code>0111551110</code></p></li>
+<li><p>5:51:11 AM (using the <code>Mdyy</code> prefix and the <code>hmmss</code> suffix): <code>111555111</code></p></li>
+<li><p>6:51:11 AM (using the <code>Mdyy</code> prefix and the <code>hmmss</code> suffix): <code>111565111</code></p></li>
+<li><p>7:51:11 AM (using the <code>Mdyy</code> prefix and the <code>hmmss</code> suffix): <code>111575111</code></p></li>
+<li><p>8:51:11 AM (using the <code>Mdyy</code> prefix and the <code>hmmss</code> suffix): <code>111585111</code></p></li>
+<li><p>9:51:11 AM (using the <code>Mdyy</code> prefix and the <code>hmmss</code> suffix): <code>111595111</code></p></li>
+<li><p>10:21:01 AM (using the <code>Mddyyyy</code> prefix and the <code>hmmss</code> suffix): <code>1012015102101</code></p></li>
+<li><p>10:21:10 AM (using the <code>MMdyyyy</code> prefix and the <code>hmmss</code> suffix): <code>0112015102110</code></p></li>
+<li><p>11:51:11 AM (using the <code>Mdyy</code> prefix and the <code>hmmss</code> suffix): <code>1115115111</code></p></li>
+<li><p>1:02:11 PM (using the <code>Mdyyyy</code> prefix and the <code>hmmss</code> suffix): <code>11201510211</code></p></li>
+<li><p>1:10:10 PM (using the <code>MMddyy</code> prefix and the <code>hmmss</code> suffix): <code>01011511010</code></p></li>
+<li><p>1:51:11 PM (using the <code>Mdyy</code> prefix and the <code>hmmss</code> suffix): <code>111515111</code></p></li>
+<li><p>2:51:11 PM (using the <code>Mdyy</code> prefix and the <code>hmmss</code> suffix): <code>111525111</code></p></li>
+<li><p>3:11:01 PM (using the <code>Mddyy</code> prefix and the <code>Hmmss</code> suffix): <code>10115151101</code></p></li>
+<li><p>3:11:10 PM (using the <code>MMdyy</code> prefix and the <code>Hmmss</code> suffix): <code>01115151110</code></p></li>
+<li><p>3:51:11 PM (using the <code>Mdyy</code> prefix and the <code>hmmss</code> suffix): <code>111535111</code></p></li>
+<li><p>4:51:11 PM (using the <code>Mdyy</code> prefix and the <code>hmmss</code> suffix): <code>111545111</code></p></li>
+<li><p>5:11:01 PM (using the <code>Mddyy</code> prefix and the <code>hmmss</code> suffix): <code>1011551101</code></p></li>
+<li><p>5:11:10 PM (using the <code>MMdyy</code> prefix and the <code>hmmss</code> suffix): <code>0111551110</code></p></li>
+<li><p>5:51:11 PM (using the <code>Mdyy</code> prefix and the <code>hmmss</code> suffix): <code>111555111</code></p></li>
+<li><p>6:51:11 PM (using the <code>Mdyy</code> prefix and the <code>hmmss</code> suffix): <code>111565111</code></p></li>
+<li><p>7:51:11 PM (using the <code>Mdyy</code> prefix and the <code>hmmss</code> suffix): <code>111575111</code></p></li>
+<li><p>8:51:11 PM (using the <code>Mdyy</code> prefix and the <code>hmmss</code> suffix): <code>111585111</code></p></li>
+<li><p>9:51:11 PM (using the <code>Mdyy</code> prefix and the <code>hmmss</code> suffix): <code>111595111</code></p></li>
+<li><p>10:21:01 PM (using the <code>Mddyyyy</code> prefix and the <code>hmmss</code> suffix): <code>1012015102101</code></p></li>
+<li><p>10:21:10 PM (using the <code>MMdyyyy</code> prefix and the <code>hmmss</code> suffix): <code>0112015102110</code></p></li>
+<li><p>10:51:11 PM (using the <code>Mdyy</code> prefix and the <code>Hmmss</code> suffix): <code>1115225111</code></p></li>
+<li><p>11:51:11 PM (using the <code>Mdyy</code> prefix and the <code>hmmss</code> suffix): <code>1115115111</code></p></li>
+</ul>
+
+<p>In a similar way we may calculate the remaining palindromic moments 
+for the rest of 2015, resulting in the reported overall sum of 5626 
+unique palindromic moments for the year.</p>
+
+<p><em>Test Case 2</em></p>
+
+<p>There are 3761 palindromic moments during 2016.  </p></div>
+            </div>
+            
+        </div>
+</html>

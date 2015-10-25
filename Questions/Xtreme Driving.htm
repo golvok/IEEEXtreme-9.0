@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<!-- First they ignore you, then they laugh at you, then they fight you, then you win. - Mohandas Karamchand Gandhi -->
+<html class=" mod_js mod_flexbox mod_flexboxlegacy mod_canvas mod_canvastext mod_webgl mod_no-touch mod_geolocation mod_history mod_draganddrop mod_rgba mod_hsla mod_multiplebgs mod_backgroundsize mod_borderimage mod_borderradius mod_boxshadow mod_textshadow mod_opacity mod_cssanimations mod_csscolumns mod_cssgradients mod_no-cssreflections mod_csstransforms mod_csstransforms3d mod_csstransitions mod_fontface mod_generatedcontent mod_video mod_audio mod_applicationcache mod_svg mod_inlinesvg mod_smil mod_svgclippaths mod_csscalc mod_fullscreen mod_cssresize mod_no-ie8compat" lang="en">
+<div class="span-md-11 hr_tour-problem-statement problem-statement">
+            
+            
+            
+            <div class="content-text challenge-text mlB">
+                <div class="msB"><p><strong>Problem Statement</strong></p></div><div class="msB"><p>Alice,
+ one of the IEEEXtreme participants, is on her way to her university to 
+take part in this year's contest. To get to the university she has to 
+drive on a four lane highway, but as the highway is very long she 
+quickly becomes bored. She decides to practice for the contest by 
+thinking about some problems related to the highway she's driving on. 
+She comes up with the following problem:</p>
+
+<p>Let's say that, in a single unit of time, her car, which is of unit-length, can perform one of the following three actions:</p>
+
+<ul>
+<li><p>Drive one unit forward, staying in the same lane</p></li>
+<li><p>If the car is not on the left-most lane, drive one unit forward and switch to the lane on the left</p></li>
+<li><p>If the car is not on the right-most lane, drive one unit forward and switch to the lane on the right</p></li>
+</ul>
+
+<p><img src="assets/1431707840-3dd394af59-highway.jpg" title="highway.jpg"></p>
+
+<p>If the highway is <em>K</em> units in length, in how many ways is it 
+possible to drive through the highway, provided that she starts on the 
+first unit of the highway at the left-most lane, and ends at the last 
+unit of the highway, also at the left-most lane?</p>
+
+<p>As she's been training very hard for the contest, it doesn't take her
+ long to come up with a solution to this problem. But all of a sudden, 
+out of nowhere, a large cow appears in front of her car, and she just 
+barely manages to avoid crashing into it. She got a bit too distracted 
+thinking about the problem... But this incident gives her an idea: what 
+if the highway had a set of stationary cows that the car must avoid 
+crashing into?</p>
+
+<p>Unfortunately she doesn't have time to think about this version of 
+the problem as she just arrived at the university and the contest is 
+about to start. When the contest starts, she is very surprised to see 
+that the problem she was thinking about is just like one of the problems
+ presented in the contest. What a coincidence! Again her hard practice 
+pays off and she quickly solves the problem. But the real question is, 
+can you?</p></div><div class="msB"><p><strong>Input Format</strong></p></div><div class="msB"><p>Input begins with two integers, <em>K</em>, the length of the highway, and <em>N</em>, the number of cows standing on the highway, subject to the following constraints:</p>
+
+<p>2 &lt;= <em>K</em> &lt;= 10<sup>18</sup></p>
+
+<p>0 &lt;= <em>N</em> &lt;= 100</p>
+
+<p><em>N</em> &lt;= 4(<em>K</em> - 2)</p>
+
+<p>Then follow <em>N</em> lines. The <em>i</em><sup>th</sup> line contains two integers describing the location of the <em>i</em><sup>th</sup> cow, <em>x<sub>i</sub></em>, the lane on which the cow is standing (1 being the left-most, and 4 being the right-most), and <em>y<sub>i</sub></em>, the unit on which the cow is standing, subject to the following constraints:</p>
+
+<p>1 &lt;= <em>x<sub>i</sub></em> &lt;= 4</p>
+
+<p>1 &lt; <em>y<sub>i</sub></em> &lt; <em>K</em></p>
+
+<p>Notice that no cows are on the first or last unit of the highway. It 
+is also guaranteed that no two cows share the same position.</p></div><div class="msB"><p><strong>Output Format</strong></p></div><div class="msB"><p>You
+ are to output the number of ways to drive from the left-most lane at 
+the first unit of the highway to the left-most lane at the <em>K</em><sup>th</sup>
+ unit of the highway subject to the rules described above, and the 
+additional constraint that the car must not drive to a position occupied
+ by a cow.</p>
+
+<p>As the number of ways can be quite large, please output the answer modulo 10<sup>9</sup> + 7. Note that this is the same as the remainder when dividing the number of ways by 10<sup>9</sup> + 7.</p></div><div class="msB"><p><strong>Sample Input</strong></p></div><div class="msB"><p></p><pre>5 2
+1 2
+2 3 
+</pre><p></p></div><div class="msB"><p><strong>Sample Output</strong></p></div><div class="msB"><p></p><pre>3
+</pre><p></p></div><div class="msB"><p><strong>Explanation</strong></p></div><div class="msB"><p>In
+ this example there are three ways to drive through the highway, and 
+they are shown in the following figures. Notice that the car can drive 
+in between cows (as long as other driving rules are fulfilled), but it 
+must not drive to a unit occupied by a cow.</p>
+
+<p><img src="assets/1431708595-dfa0d250ce-highway_ex1.jpg" title="highway_ex1.jpg"></p>
+
+<p><img src="assets/1431708598-b267dd3632-highway_ex2.jpg" title="highway_ex2.jpg"></p>
+
+<p><img src="assets/1431708601-c5c81d2282-highway_ex3.jpg" title="highway_ex3.jpg"></p>
+
+<p>Note:  Two more sample test cases are available if you click on the "Run" button.</p></div>
+            </div>
+            
+        </div>
+</html>

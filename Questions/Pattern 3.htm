@@ -1,0 +1,50 @@
+<html>
+        <div class="span-md-11 hr_tour-problem-statement problem-statement">
+            
+            
+            
+            <div class="content-text challenge-text mlB">
+                <div class="msB"><p><strong>Problem Statement</strong></p></div><div class="msB"><p>Vangelis
+ the bear received a digital signal pattern generator that his brother 
+Mitsos built. The generator produces a signal that is encoded using the 
+Latin alphabet. Vangelis starts the generator for some time and records 
+the signal generated. He wants to study the sample he received and try 
+to identify the smallest pattern that the generator could be using to 
+generate the sample.  </p>
+
+<p>Your task is to help Vangelis by writing a program that will calculate the length of the smallest valid pattern.</p></div><div class="msB"><p><strong>Input Format</strong></p></div><div class="msB"><p>The input is made up of multiple test cases.</p>
+
+<p>The first line contains an integer <em>T</em> (1 &lt;= <em>T</em> &lt;= 10), the number of test cases in this file.</p>
+
+<p>Each line contains an encoded signal. The signal is encoded using the
+ small letters of the Latin alphabet. The length of a signal is between 1
+ and 10<sup>6</sup> characters, inclusive.</p>
+
+<p>Vangelis has started the recording at the beginning of a pattern, so 
+each line begins with the first character in the pattern.  His recording
+ lasts for at least one pattern length, but the length of the recording <strong>may not be an exact multiple of the pattern length</strong>.</p></div><div class="msB"><p><strong>Output Format</strong></p></div><div class="msB"><p>There must be <em>T</em> lines of output and each line will contain a single non-negative integer number, the length of the minimum valid pattern.</p></div><div class="msB"><p><strong>Sample Input</strong></p></div><div class="msB"><pre><code>6
+abab
+abababababababababab
+abababababab
+abc
+aaaaaa
+aabaabbaabaabbaabaabbaabaab
+</code></pre></div><div class="msB"><p><strong>Sample Output</strong></p></div><div class="msB"><pre><code>2
+2
+2
+3
+1
+7
+</code></pre></div><div class="msB"><p><strong>Explanation</strong></p></div><div class="msB"><p>The repeating patterns in each of the test cases are:</p>
+
+<pre><code>ab
+ab
+ab
+abc
+a
+aabaabb
+</code></pre></div>
+            </div>
+            
+        </div>
+</html>

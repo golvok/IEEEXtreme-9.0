@@ -1,0 +1,57 @@
+<html>
+        <div class="span-md-11 hr_tour-problem-statement problem-statement">
+            
+            
+            
+            <div class="content-text challenge-text mlB">
+                <div class="msB"><p><strong>Problem Statement</strong></p></div><div class="msB"><p>John
+ is a computer programmer and is highly known for his achievements in 
+his field. In addition to being a passionate software professional, he 
+is also passionate about motorcars and motorbikes.</p>
+
+<p>So, after ending his successful and lengthy software career, he 
+decides to take up his passion. He starts an organization by the name 
+"Car Spark" (CS). CS is an organization from which you can rent luxury 
+cars of your choice on an hourly rental basis. </p>
+
+<p>CS would like to accept bookings for the weekend in advance, and then
+ decide which bookings to process based on the profits that would be 
+earned.  When placing an order, customers quote the amount that they are
+ willing to pay for that vehicle during that particular timespan. Since a
+ car can only be given to one customer during a particular time period, 
+CS must be careful about which bookings to process.  </p>
+
+<p>Initially CS has only one vehicle available for rent.  To be the 
+first hire for CS, you must develop a program to maximize revenue on 
+bookings for this vehicle. </p></div><div class="msB"><p><strong>Input Format</strong></p></div><div class="msB"><p>Input begins with a single integer <em>T</em>, 1 &lt;= <em>T</em> &lt;= 100, which denotes number of test cases.</p>
+
+<p>Each test case begins with a single integer <em>N</em>, 1 &lt;= <em>N</em> &lt;= 2000, which is the number of bookings John received. </p>
+
+<p>The remainder of the test case consists of <em>N</em> lines containing three integers <em>B<sub>s</sub></em>, <em>B<sub>e</sub></em>, and <em>A<sub>i</sub></em> each separated by a space, where <em>B<sub>s</sub></em> is the booking start time, <em>B<sub>e</sub></em> is the booking end time, and <em>A<sub>i</sub></em> is the amount that the customer is willing to spend for the entire booking.  Note that 0 &lt;= <em>B<sub>s</sub></em> &lt; <em>B<sub>e</sub></em> &lt;= 48 and 1 &lt;= <em>A<sub>i</sub></em> &lt;= 100000.</p>
+
+<p>Note:  The car may only be rented during the weekend, meaning from 
+12:00 AM on Saturday to 12:00 AM on Monday. Since the two days in the 
+weekend have 48 hours, 12 noon on a Sunday would be the (24+12) 36th 
+hour. Similarly, if the booking start time is 10:00 PM on Saturday and 
+the booking end time is 12:00 AM on Sunday, then <em>B<sub>s</sub></em> would be 22 and <em>B<sub>e</sub></em> would be 24. </p></div><div class="msB"><p><strong>Output Format</strong></p></div><div class="msB"><p>You are to output a single line for each test case, giving the maximum revenue John can make from the orders he received.</p></div><div class="msB"><p><strong>Sample Input</strong></p></div><div class="msB"><pre><code>2
+4
+1 2 100
+2 3 200
+3 4 1600
+1 3 2100
+3
+1 10 2000
+2 5 100
+6 9 400
+</code></pre></div><div class="msB"><p><strong>Sample Output</strong></p></div><div class="msB"><pre><code>3700
+2000
+</code></pre></div><div class="msB"><p><strong>Explanation</strong></p></div><div class="msB"><p>For
+ the first test case, for the time slot 1-3 maximum revenue John can 
+make is 2100 (Max(100+200, 2100)) and for slot 3-4 he can make 1600. The
+ maximum total revenue is 3700 (2100+1600).</p>
+
+<p>Similarly for second test case, the maximum revenue he can generate is 2000.</p></div>
+            </div>
+            
+        </div>
+</html>
