@@ -50,7 +50,7 @@ int main() {
 
 	for (uint test_case_num = 0; test_case_num < num_test_cases; ++test_case_num) {
 		auto num_bookings = get<uint>();
-		std::vector<Bookings> bookings;
+		std::vector<Booking> bookings;
 		
 		for (uint j = 0; j < num_bookings; ++j) {
 			bookings.emplace_back();
