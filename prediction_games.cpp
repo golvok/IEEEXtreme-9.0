@@ -27,6 +27,27 @@ auto operator<<(STREAM& os, const T& t) -> decltype(static_cast<const print_prin
 	return os;
 }
 
+using t_score = unsigned long;
+
+
+int winner (const std::pair<short,short>& p) {
+	return p.first < p.second;
+}
+
+t_score getPointsFrom(const std::pair<short,short>& player_prediction, const std::pair<short,short>& competition_result) {
+	t_score retval = 0;
+	if (winner(player_prediction) == winner(competition_result)) {
+		retval += 10;
+	}
+
+	retval += std::max(0,5 - std::abs(player_prediction.first - competition_result.first));
+	retval += std::max(0,5 - std::abs(player_prediction.second - competition_result.second));
+
+	retval += std::max(0,5 - std::abs((player_prediction.first - player_prediction.second) - (competition_result.first - competition_result.second)));
+
+	return retval;
+}
+
 int main() {
 	auto num_test_cases = get<size_t>(std::cin);
 	for (size_t test_case = 0; test_case < num_test_cases; ++test_case) {
@@ -38,6 +59,7 @@ int main() {
 		std::vector<std::string> player_names;
 		std::vector<std::vector<std::pair<short,short>>> player_predictions;
 		std::vector<std::pair<short,short>> competition_results;
+		std::vector<size_t> undecided_competitions;
 
 		for (size_t i = 0; i < num_players; ++i) {
 			if (std::cin.eof()) {
@@ -62,6 +84,7 @@ int main() {
 			if (std::cin.eof()) {
 				break;
 			} else if (c == '?') {
+				undecided_competitions.push_back(competition_results.size());
 				competition_results.emplace_back(-1,-1);
 				c = get<char>(std::cin); // get second question mark
 			} else if (std::isalpha(c)) {
@@ -89,11 +112,6 @@ int main() {
 		// 	std::cout << competition_results[i].first << ' ' << competition_results[i].second << ", ";
 		// }
 		// std::cout << '\n';
-		using t_score = unsigned long;
-
-		auto winner = [](const std::pair<short,short>& p) -> int {
-			return p.first < p.second;
-		};
 
 		std::vector<t_score> scores(num_players,0);
 		
@@ -107,16 +125,17 @@ int main() {
 					continue; // skip not yet determined
 				}
 
-				if (winner(player_prediction) == winner(competition_result)) {
-					player_score += 10;
-				}
-
-				player_score += std::max(0,5 - std::abs(player_prediction.first - competition_result.first));
-				player_score += std::max(0,5 - std::abs(player_prediction.second - competition_result.second));
-
-				player_score += std::max(0,5 - std::abs((player_prediction.first - player_prediction.second) - (competition_result.first - competition_result.second)));
+				player_score += getPointsFrom(player_prediction,competition_result);
 			}
 		}
+
+		// for (size_t player_index = 0; player_index < num_players; ++player_index) {
+		// 	auto& player_score = scores[player_index];
+		// 	for (size_t comp_index = 0; comp_index < num_competitions; ++comp_index) {
+		// 		const auto& player_prediction = player_predictions[player_index][comp_index];
+		// 		const auto& competition_result = competition_results[comp_index];
+		// 	}
+		// }
 
 		for (size_t i = 0; i < num_players; ++i) {
 			std::cout << player_names[i] << " : " << scores[i] << '\n';
