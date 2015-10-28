@@ -5,7 +5,7 @@
 MAKEFLAGS += " -r "
 .SUFFIXES:
 
-CXXFLAGS += -Wall -Weffc++ -Wextra -Werror -pedantic -std=c++11 -ggdb -D_GLIBCXX_DEBUG
+CXXFLAGS += -Wall -Weffc++ -Wextra -Werror -pedantic -std=c++14 -ggdb -D_GLIBCXX_DEBUG
 CFLAGS += -Wall -Wextra -Werror -pedantic -std=gnu99 -ggdb
 LDFLAGS += -ggdb
 

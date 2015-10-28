@@ -247,57 +247,57 @@ auto combine(INDEX first, INDEX last, INITIAL_RESULT ir, FUNC f, COMB_FUNC combi
  * Goes from 'first' to 'last', calling 'f' on the each, and keeping track of the sum.
  * Can be used to easily implement something that you know in Big Sigma notation
  */
-// template<typename INDEX, typename FUNC>
-// auto sum(INDEX first, INDEX last, FUNC f) {
-// 	return combine(
-// 		first,
-// 		last,
-// 		0,
-// 		f,
-// 		[&](auto lhs, auto rhs) {
-// 			return lhs + rhs;
-// 		},
-// 		[&](auto i) {
-// 			return i + 1;
-// 		}
-// 	);
-// }
+template<typename INDEX, typename FUNC>
+auto sum(INDEX first, INDEX last, FUNC f) {
+	return combine(
+		first,
+		last,
+		0,
+		f,
+		[&](auto lhs, auto rhs) {
+			return lhs + rhs;
+		},
+		[&](auto i) {
+			return i + 1;
+		}
+	);
+}
 
 /**
  * same as sum, except goes from 'last' to 'first' if you need that for floating point math reasons.
  */
-// template<typename INDEX, typename FUNC>
-// auto reverse_sum(INDEX first, INDEX last, FUNC f) {
-// 	return combine(
-// 		last,
-// 		first,
-// 		0,
-// 		f,
-// 		[&](auto lhs, auto rhs) {
-// 			return lhs + rhs;
-// 		},
-// 		[&](auto i) {
-// 			return i - 1;
-// 		}
-// 	);
-// }
+template<typename INDEX, typename FUNC>
+auto reverse_sum(INDEX first, INDEX last, FUNC f) {
+	return combine(
+		last,
+		first,
+		0,
+		f,
+		[&](auto lhs, auto rhs) {
+			return lhs + rhs;
+		},
+		[&](auto i) {
+			return i - 1;
+		}
+	);
+}
 
 /**
  * Goes from 'first' to 'last', calling 'f' on the each, and keeping track of the product.
  * Can be used to easily implement something that you know in Big Pi notation
  */
-// template<typename INDEX, typename FUNC>
-// auto product(INDEX first, INDEX last, FUNC f) {
-// 	return combine(
-// 		first,
-// 		last,
-// 		1,
-// 		f,
-// 		[&](auto lhs, auto rhs) {
-// 			return lhs * rhs;
-// 		},
-// 		[&](auto i) {
-// 			return i + 1;
-// 		}
-// 	);
-// }
+template<typename INDEX, typename FUNC>
+auto product(INDEX first, INDEX last, FUNC f) {
+	return combine(
+		first,
+		last,
+		1,
+		f,
+		[&](auto lhs, auto rhs) {
+			return lhs * rhs;
+		},
+		[&](auto i) {
+			return i + 1;
+		}
+	);
+}
