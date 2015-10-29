@@ -1,4 +1,6 @@
 
+#include "common/generator.hpp"
+
 #include <vector>
 #include <deque>
 #include <string>
@@ -7,145 +9,103 @@
 #include <iostream>
 #include <locale>
 #include <limits>
+#include <memory>
 
-using namespace std;
+template<typename T, typename STREAM>
+T get(STREAM& is) {
+    T t;
+    is >> t;
+    return t;
+}
+
+template<typename T>
+T get() {
+    return get<T>(std::cin);
+}
+
+template<typename id_type, typename TAG>
+class ID {
+    id_type value;
+public:
+    explicit ID(const id_type& value) : value(value) { }
+    operator id_type() const { return value; }
+};
+
+struct NodeID_tag {};
+struct EdgeID_tag {};
+using NodeID = ID<size_t,NodeID_tag>;
+using EdgeID = ID<size_t,EdgeID_tag>;
+const NodeID INVALID_NODE = NodeID((size_t)-1);
+const EdgeID INVALID_EDGE = EdgeID((size_t)-1);
 
 class Node {
 public:
-    bool isDoubleNode;
-    Node** links;
-    int* linkWeights;
-
-    void init(int num);
+    Node() : out_edges() { }
+    std::vector<EdgeID> out_edges;
+    void addEdge(EdgeID eid) { out_edges.push_back(eid); }
 };
-
-void Node::init(int num) {
-    isDoubleNode = false;
-    links = new Node* [num+1];
-    linkWeights = new int [num+1];
-    for (int i=0; i < num+1; ++i) {
-        links[i] = NULL;
-        linkWeights[i] = 0;
-    }
-}
 
 class Graph {
 public:
-    Graph(int num);
-    ~Graph();
+    Graph(size_t num_nodes)
+        : nodes(num_nodes)
+        , edges()
+    {
+        for (auto& node : nodes) {
+            node = std::make_unique<Node>();
+        }
+    }
+
     Graph& operator=(const Graph&) = delete;
     Graph(const Graph&) = delete;
 
-    bool addNode(int a, int b);
-    int findMin();
-    int findMinForNode(int nodeID);
+    void addEdge(NodeID a, NodeID b) {
+        edges.emplace_back(a,b);
+        nodes[a]->addEdge(EdgeID(edges.size() - 1));
+        nodes[b]->addEdge(EdgeID(edges.size() - 1));
+    }
 
-    vector<int> doubleNodes;
-    Node** nodes;
+    size_t BFS(NodeID nodeID);
 
-    bool twoDoubleNodesExist;
+    NodeID getTarget(EdgeID eid, NodeID src_id) {
+        const auto& edge = edges[eid];
+        return (edge.first == src_id) ? edge.second : edge.first;
+    }
 
-    int numNodes;
+    auto nodeIDs() { return xrange<size_t>(0, nodes.size()-1); }
+    auto edgeIDs() { return xrange<size_t>(0, edges.size()-1); }
+
+    std::vector<std::unique_ptr<Node>> nodes;
+    std::vector<std::pair<NodeID,NodeID>> edges;
 };
 
-int Graph::findMinForNode(int nodeID) {
-    std::vector<uint> distances(numNodes,0);
-    std::vector<int> parent(numNodes,0);
+size_t Graph::BFS(NodeID nodeID) {
+    std::vector<size_t> distance(nodes.size(),(size_t)-1);
 
-    for (int i = 0; i < numNodes; ++i) {
-        distances[i] = (uint)(-1);
-        parent[i] = -1;
-    }
+    std::vector<NodeID> current_queue;
+    std::vector<NodeID> next_queue;
+    next_queue.push_back(nodeID);
 
-    std::deque<int> Q;
+    while (next_queue.empty() == false) {
+        std::swap(current_queue,next_queue);
 
-    distances[nodeID] = 0;
-    parent[nodeID] = nodeID;
-    Q.push_back(nodeID);
+        while (current_queue.empty() == false) {
 
-    while (!Q.empty()) {
+            NodeID current_node = current_queue.back();
+            current_queue.pop_back();
 
-        int u = Q.back();
-        Q.pop_back();
+            for (EdgeID eid : nodes[current_node]->out_edges) {
+                NodeID other_node = getTarget(eid, current_node);
 
-        if (nodes[u]->isDoubleNode) {
-            return (distances[parent[u]] + 1) + 2; // needs to be +2 to get answer
-        }
-
-        for (int i = 0; i < numNodes; ++i) {
-            // for each node n that is adjacent to u:
-            Node* n = nodes[u]->links[i];
-            if (n == nullptr) {
-                continue;
-            }
-
-            if (distances[i] == (uint)(-1)) {
-                distances[i] = distances[u] + 1;
-                parent[i] = u;
-                Q.push_back(i);
+                if (distance[other_node] == (size_t)(-1)) {
+                    distance[other_node] = distance[current_node] + 1;
+                    next_queue.push_back(other_node);
+                }
             }
         }
     }
-    return -1;
-}
 
-int Graph::findMin() {
-    int rtn = findMinForNode(doubleNodes[0]);
-    for (size_t i=1; i<doubleNodes.size()-1; ++i) {
-        rtn = min(rtn, findMinForNode(doubleNodes[i]));
-    }
-    return rtn;
-}
-
-Graph::Graph(int num)
-    : doubleNodes()
-    , nodes(nullptr)
-    , twoDoubleNodesExist(false)
-    , numNodes(0)
-{
-    numNodes = num;
-    nodes = new Node* [num+1];
-    for (int i=0; i<num+1; ++i) {
-        nodes[i] = new Node;
-        nodes[i]->init(num);
-    }
-    twoDoubleNodesExist = false;
-}
-
-Graph::~Graph() {
-    for (int i=0; i<numNodes+1; ++i) {
-        delete [] nodes[i]->links;
-        delete [] nodes[i]->linkWeights;
-        delete nodes[i];
-    }
-    delete [] nodes;
-}
-
-bool Graph::addNode(int a, int b) {
-    nodes[a]->links[b] = nodes[b];
-    nodes[a]->linkWeights[b] += 1;
-    if (nodes[a]->linkWeights[b] > 2) {
-        // triple node
-        return true;
-    } else if (nodes[a]->isDoubleNode && nodes[a]->linkWeights[b] > 1) {
-        twoDoubleNodesExist = true;
-    } else if (nodes[a]->linkWeights[b] > 1) {
-        nodes[a]->isDoubleNode = true;
-        doubleNodes.push_back(a);
-    }
-
-    nodes[b]->links[a] = nodes[a];
-    nodes[b]->linkWeights[a] += 1;
-    if (nodes[b]->linkWeights[a] > 2) {
-        // triple node
-        return true;
-    } else if (nodes[b]->isDoubleNode  && nodes[b]->linkWeights[a] > 1) {
-        twoDoubleNodesExist = true;
-    } else if (nodes[b]->linkWeights[a] > 1) {
-        nodes[b]->isDoubleNode = true;
-        doubleNodes.push_back(b);
-    }
-    return false;
+    return 0;
 }
 
 template <typename T>
@@ -167,45 +127,67 @@ unsigned int getAndParseLine(std::vector<T>& elements, char delim=' ', std::istr
     return elements.size();
 }
 
-
 int main() {
-    vector<int> numTestCases;
-    getAndParseLine(numTestCases);
-    int i,j;
-    bool done;
-    for (i=0; i<numTestCases[0]; ++i) {
-        done = false;
-        vector<int> numRooms;
-        getAndParseLine(numRooms);
-        Graph graph(numRooms[0]);
+    const auto numTestCases = get<uint>();
+    for (uint i=0; i<numTestCases; ++i) {
+        const auto numRooms = get<uint>(); 
+        Graph graph(numRooms);
 
-        vector<int> numPeople;
-        getAndParseLine(numPeople);
-        for (j=0; j<numPeople[0]; ++j) {
-            vector<int> rooms;
-            getAndParseLine(rooms);
-            if (!done && graph.addNode(rooms[0], rooms[1])) {
-                // triple node
-                cout << 2 << endl;
-                done = true;
+        const auto numPeople = get<uint>();
+        for (uint j=0; j<numPeople; ++j) {
+            auto room0 = get<uint>();
+            auto room1 = get<uint>();
+            // std::cout << "room: " << room0 << " " << room1 << '\n';
+            graph.addEdge(NodeID(room0-1), NodeID(room1-1));
+        }
+
+        uint lowest_number_of_people = numPeople;
+        size_t num_nodes_in_subgraph_to_try_next = numRooms;
+
+        while (true) {
+            std::vector<bool> nodes_in_subgraph(numRooms,false);
+            size_t num_nodes_in_subgraph = num_nodes_in_subgraph_to_try_next;
+
+            // fill first num_nodes_in_subgraph as true
+            std::fill_n(nodes_in_subgraph.begin(), num_nodes_in_subgraph, true);
+
+            for (uint try_num = 0; try_num < (numRooms - num_nodes_in_subgraph); ++try_num) {
+                size_t num_edges_in_subgraph = 0;
+
+                // std::cout << "subgraph:\n";
+
+                for (auto eid : graph.edgeIDs()) {
+                    if (   nodes_in_subgraph[graph.edges[eid].first]
+                        && nodes_in_subgraph[graph.edges[eid].second]
+                    ) {
+                        num_edges_in_subgraph += 1;
+                        // std::cout << '\t' << graph.edges[eid].first+1 << ',' << graph.edges[eid].second+1 << '\n';
+                    }
+                }
+                int eu_char = num_nodes_in_subgraph - num_edges_in_subgraph;
+                // std::cout << "Euler Characteristic = " << eu_char << '\n';
+
+                if (eu_char < 0) {
+                    if (num_nodes_in_subgraph < lowest_number_of_people) {
+                        lowest_number_of_people = num_nodes_in_subgraph;
+                    }
+                }
+
+                // shift forward by one
+                nodes_in_subgraph.pop_back();
+                nodes_in_subgraph.insert(nodes_in_subgraph.begin(),false);
+            }
+
+            num_nodes_in_subgraph_to_try_next -= 1;
+
+            if (num_nodes_in_subgraph_to_try_next == 0) {
+                break;
             }
         }
 
-        if(!done && graph.twoDoubleNodesExist) {
-            cout << 3 << endl;
-            done = true;
-        }
-
-        if(!done && graph.doubleNodes.size() < 3) {
-            cout << numPeople[0] << endl;
-            done = true;
-        }
-
-        if(!done) {
-            int ans = graph.findMin();
-            cout << ans << endl;
-        }
+        std::cout << lowest_number_of_people << '\n';
 
     }
+
     return 0;
 }
