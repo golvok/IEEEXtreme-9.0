@@ -23,6 +23,28 @@ T get() {
     return get<T>(std::cin);
 }
 
+std::pair<std::vector<bool>,bool> first_number_with_n_bits(size_t num_bits, size_t num_high_bits) {
+    std::vector<bool> result(num_bits,false);
+    std::fill_n(result.begin(), num_high_bits, true);
+    return {result, num_high_bits <= num_bits};
+}
+
+std::pair<std::vector<bool>,bool> next_number_with_same_number_of_bits(std::vector<bool>&& gen_number) {
+
+    auto first_one = std::find(gen_number.begin(), gen_number.end(), true);
+    auto next_zero = std::find(first_one, gen_number.end(), false);
+    size_t run_size = std::distance(first_one,next_zero);
+
+    if (next_zero != gen_number.end()) {
+        *next_zero = 1;
+    }
+
+    std::fill_n(gen_number.begin(), (run_size-1), true);
+    std::fill(gen_number.begin() + (run_size-1), next_zero, false);
+
+    return {gen_number,next_zero != gen_number.end()};
+}
+
 template<typename id_type, typename TAG>
 class ID {
     id_type value;
@@ -142,16 +164,18 @@ int main() {
         }
 
         uint lowest_number_of_people = numPeople;
-        size_t num_nodes_in_subgraph_to_try_next = numRooms;
+        size_t num_nodes_in_subgraph_to_try_next = 2;
 
         while (true) {
-            std::vector<bool> nodes_in_subgraph(numRooms,false);
-            size_t num_nodes_in_subgraph = num_nodes_in_subgraph_to_try_next;
+            const size_t num_nodes_in_subgraph = num_nodes_in_subgraph_to_try_next;
 
-            // fill first num_nodes_in_subgraph as true
-            std::fill_n(nodes_in_subgraph.begin(), num_nodes_in_subgraph, true);
-
-            for (uint try_num = 0; try_num < (numRooms - num_nodes_in_subgraph); ++try_num) {
+            // iterate over every subgraph of size num_nodes_in_subgraph
+            for (
+                auto nodes_in_subgraph_pair = first_number_with_n_bits(numRooms, num_nodes_in_subgraph);
+                nodes_in_subgraph_pair.second == true;
+                nodes_in_subgraph_pair = next_number_with_same_number_of_bits(std::move(nodes_in_subgraph_pair.first))
+            ) {
+                const auto& nodes_in_subgraph = nodes_in_subgraph_pair.first; // a bitset with 1s where we should include the nodes
                 size_t num_edges_in_subgraph = 0;
 
                 // std::cout << "subgraph:\n";
@@ -172,19 +196,20 @@ int main() {
                         lowest_number_of_people = num_nodes_in_subgraph;
                     }
                 }
-
-                // shift forward by one
-                nodes_in_subgraph.pop_back();
-                nodes_in_subgraph.insert(nodes_in_subgraph.begin(),false);
             }
 
-            num_nodes_in_subgraph_to_try_next -= 1;
+            num_nodes_in_subgraph_to_try_next += 1;
 
-            if (num_nodes_in_subgraph_to_try_next == 0) {
+            if (num_nodes_in_subgraph_to_try_next > numRooms) {
+                break;
+            }
+
+            if (num_nodes_in_subgraph_to_try_next > lowest_number_of_people) {
                 break;
             }
         }
 
+        // std::cout << "FINAL ANSWER: ";
         std::cout << lowest_number_of_people << '\n';
 
     }
