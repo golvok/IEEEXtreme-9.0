@@ -71,6 +71,94 @@ enum class Orientation : unsigned char {
 	HORIZONTAL = 0, VERTICAL = 1,
 };
 
+const Point& theMostDirPoint(const Line& l, Direction dir) {
+	switch (dir) {
+		default:
+		case Direction::RIGHT:
+			if (l.first.x > l.second.x) {
+				return l.first;
+			} else if (l.first.x < l.second.x) {
+				return l.second;
+			} else {
+				return l.first;
+			}
+		case Direction::UP:
+			if (l.first.y > l.second.y) {
+				return l.first;
+			} else if (l.first.y < l.second.y) {
+				return l.second;
+			} else {
+				return l.first;
+			}
+		case Direction::LEFT:
+			if (l.first.x < l.second.x) {
+				return l.first;
+			} else if (l.first.x > l.second.x) {
+				return l.second;
+			} else {
+				return l.second;
+			}
+		case Direction::DOWN:
+			if (l.first.y < l.second.y) {
+				return l.first;
+			} else if (l.first.y > l.second.y) {
+				return l.second;
+			} else {
+				return l.second;
+			}
+	}
+}
+
+Direction flip(Direction dir) {
+	switch (dir) {
+		default:
+		case Direction::RIGHT:
+			return Direction::LEFT;
+		case Direction::UP:
+			return Direction::DOWN;
+		case Direction::LEFT:
+			return Direction::RIGHT;
+		case Direction::DOWN:
+			return Direction::UP;
+	}
+}
+
+std::ostream& operator<<(std::ostream& os, const Direction& dir) {
+	switch (dir) {
+		default:
+		case Direction::RIGHT:
+			return os << "RIGHT";
+		case Direction::UP:
+			return os << "UP";
+		case Direction::LEFT:
+			return os << "LEFT";
+		case Direction::DOWN:
+			return os << "DOWN";
+	}
+	return os;
+}
+
+Orientation orientationOfDirection(Direction dir) {
+	switch (dir) {
+		default:
+		case Direction::RIGHT:
+		case Direction::LEFT:
+			return Orientation::HORIZONTAL;
+		case Direction::UP:
+		case Direction::DOWN:
+			return Orientation::VERTICAL;
+	}
+}
+
+auto getCordCorrispondingTo(const Point& p, Orientation orien) {
+	switch (orien) {
+		default:
+		case Orientation::HORIZONTAL:
+			return p.x;
+		case Orientation::VERTICAL:
+			return p.y;
+	}
+}
 
 template<typename CONTAINER>
 double polygonArea(const CONTAINER& points, size_t begin, size_t past_end, Point point_before_first) {
@@ -95,7 +183,7 @@ public:
 	TreeManager()
 		: caches_valid(true)
 		, all_trees()
-		, sorted_treess()
+		, sorted_trees()
 	{ }
 
 	void addTree(const Point& tree) {
@@ -103,14 +191,19 @@ public:
 		all_trees.emplace_back(tree);
 	}
 
+	auto& getSortedTrees(Orientation orien) { return sorted_trees[(size_t)orien]; }
+
 	void buildCaches() {
 		for (auto pair : {
-			std::make_pair(Orientation::VERTICAL, std::ref(sorted_treess[0])),
-			std::make_pair(Orientation::HORIZONTAL, std::ref(sorted_treess[1]))
+			std::make_pair(Orientation::HORIZONTAL, std::ref(getSortedTrees(Orientation::HORIZONTAL))),
+			std::make_pair(Orientation::VERTICAL, std::ref(getSortedTrees(Orientation::VERTICAL)))
 		}) {
 			auto& to_be_sorted = pair.second;
+			to_be_sorted.clear();
+			std::copy(all_trees.begin(), all_trees.end(), std::back_inserter(to_be_sorted));
 			std::sort(to_be_sorted.begin(), to_be_sorted.end(), [&](const Point& l, const Point& r) {
 				switch (pair.first) {
+					default:
 					case Orientation::HORIZONTAL:
 						return l.x < r.x;
 					case Orientation::VERTICAL:
@@ -121,14 +214,108 @@ public:
 		caches_valid = true;
 	}
 
-	bool noTreesInDirection(const Line& line, Direction dir);
+	bool noTreesInDirection(const Point& p, Direction dir) {
+		switch (dir) {
+			default:
+			case Direction::RIGHT:
+				return p.x > getSortedTrees(orientationOfDirection(dir)).back().x;
+			case Direction::UP:
+				return p.y > getSortedTrees(orientationOfDirection(dir)).back().y;
+			case Direction::LEFT:
+				return p.x < getSortedTrees(orientationOfDirection(dir)).front().x;
+			case Direction::DOWN:
+				return p.y < getSortedTrees(orientationOfDirection(dir)).front().y;
+		}
+	}
+
+	auto boundsToSearch(const Line& line, Orientation orien) {
+		Direction dir_of_neg_inf = [&]() {
+			switch(orien) {
+				default:
+				case Orientation::HORIZONTAL:
+					// std::cout << "\t\tsearching HORIZONTAL\n";
+					return Direction::LEFT;
+				case Orientation::VERTICAL:
+					// std::cout << "\t\tsearching VERTICAL\n";
+					return Direction::DOWN;
+			}
+		}();
+
+		// std::cout << "\t\tlooking at trees between " << theMostDirPoint(line,     dir_of_neg_inf ) << " and " << theMostDirPoint(line,flip(dir_of_neg_inf)) << '\n';
+
+		auto& to_search = getSortedTrees(orien);
+		return std::make_pair(
+			std::lower_bound(to_search.begin(),to_search.end(),theMostDirPoint(line,     dir_of_neg_inf ),[&](const auto& l, const auto& r) {
+				return getCordCorrispondingTo(l,orien) < getCordCorrispondingTo(r,orien);
+			}),
+			std::upper_bound(to_search.begin(),to_search.end(),theMostDirPoint(line,flip(dir_of_neg_inf)),[&](const auto& l, const auto& r) {
+				return getCordCorrispondingTo(l,orien) < getCordCorrispondingTo(r,orien);
+			})
+		);
+	}
 
 	bool allTreesAreToTheRight(const Line& line) {
-		return find_if(all_trees.begin(), all_trees.end(), [&](const auto& tree) {
+		std::pair<decltype(all_trees.begin()),decltype(all_trees.begin())> range;
+
+		if (caches_valid) {
+
+			const auto left_of_line_is_actually = [&]() -> std::pair<Direction,Direction> {
+				const auto slope = [](Point p) { return p.y/(double)p.x; }(line.second - line.first);
+				if (line.first.x < line.second.x) {
+					if (slope > 1) {
+						return { Direction::LEFT, Direction::UP };
+					} else if (slope > 0) {
+						return { Direction::UP, Direction::LEFT };
+					} else if (slope < -1) {
+						return { Direction::RIGHT, Direction::UP };
+					} else {
+						return { Direction::UP, Direction::RIGHT };
+					}
+				} else {
+					if (slope > 1) {
+						return { Direction::LEFT, Direction::DOWN };
+					} else if (slope > 0) {
+						return { Direction::DOWN, Direction::LEFT };
+					} else if (slope < -1) {
+						return { Direction::RIGHT, Direction::DOWN };
+					} else {
+						return { Direction::DOWN, Direction::RIGHT };
+					}
+				}
+			}();
+
+			// std::cout << "\t\"left\" is " << left_of_line_is_actually.first << " but " << left_of_line_is_actually.second << '\n';
+
+			for (auto dir : { left_of_line_is_actually.first, left_of_line_is_actually.second }) {
+				if (noTreesInDirection(theMostDirPoint(line,flip(dir)),dir)) {
+					// std::cout << "\tno trees anywhere remotely " << dir << "\n";
+					return true;
+				} else if (!noTreesInDirection(theMostDirPoint(line,dir),dir)) {
+					// std::cout << "\tdefinitely trees to the " << flip(dir) << "\n";
+					return false;
+				}
+			}
+
+			// std::cout << "\tresorting to search\n";
+			range = boundsToSearch(line, orientationOfDirection(left_of_line_is_actually.first));
+
+		} else {
+			// std::cout << "\tno chaches yet\n";
+			range = std::make_pair(all_trees.begin(),all_trees.end());
+		}
+
+		return std::find_if(range.first, range.second, [&](const auto& tree) {
 			auto first_to_second = line.second - line.first;
 			auto first_to_tree = tree - line.first;
-			return ((first_to_second.x)*(first_to_tree.y) - (first_to_second.y)*(first_to_tree.x)) >= 0;
-		}) == all_trees.end();
+			// std::cout << "\t\tlooking at tree " << tree;
+			if (((first_to_second.x)*(first_to_tree.y) - (first_to_second.y)*(first_to_tree.x)) >= 0) {
+				// std::cout << " - it was not on the left!\n";
+				return true;
+			} else {
+				// std::cout << '\n';
+				return false;
+			}
+		}) == range.second;
 	}
 
 	const auto& trees() { return all_trees; }
@@ -136,7 +323,7 @@ private:
 	bool caches_valid;
 	std::vector<Point> all_trees;
 
-	std::array<std::vector<Point>,2> sorted_treess;
+	std::array<std::vector<Point>,2> sorted_trees;
 };
 
 int main() {
@@ -190,9 +377,11 @@ int main() {
 		// std::cout << '\n';
 
 		if (numTrees == 0) {
-			std::cout << polygonArea(border,0,border.size(),*(border.end()-1)) << '\n';
+			std::cout << polygonArea(border,0,border.size(),border.back()) << '\n';
 			return 0;
 		}
+
+		trees.buildCaches();
 
 		double best_area = 0;
 		std::pair<int,int> best_indexes = {0,0};
@@ -201,12 +390,16 @@ int main() {
 		for (size_t i_border_point = 0; i_border_point < border.size(); ++i_border_point) {
 			other_index = std::max(other_index,i_border_point+2);
 			while (true) {
+				// if ((other_index + 1) % border.size() == i_border_point) {
+				// 	break; // loop around condition. confuses new tree checking
+				// }
+
 				Line line(
 					cyclic_access(border)[other_index],
 					cyclic_access(border)[i_border_point]
 				);
 
-				// std::cout << "looking at " << line.first << "->" << line.second << " (" << other_index << ',' << i_border_point << ")\n";
+				// std::cout << "trying " << line.first << "->" << line.second << " (" << other_index << "->" << i_border_point << ")\n";
 				if (!trees.allTreesAreToTheRight(line)) {
 					// std::cout << "\tbut there were trees\n\n";
 					break;
